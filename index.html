@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ผลการแข่งขันกีฬาสีภายใน | แคแสดสองแควเกมส์ครั้งที่ 29</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;600;700&family=Prompt:wght@400;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --blue: #0D47A1;
+  --orange: #FF6F00;
+  --bg: #F3F6FB;
+  --glass: rgba(255,255,255,0.75);
+}
+
+body {
+  font-family: 'Sarabun', sans-serif;
+  margin: 0;
+  background: linear-gradient(180deg, #E3F2FD, #FFF8E1);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* HEADER */
+header {
+  font-family: 'Prompt', sans-serif;
+  background: linear-gradient(90deg, var(--blue), var(--orange));
+  color: white;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+/* โลโก้มุมซ้าย */
+#logo {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 120px;
+  width: auto;
+}
+
+/* ข้อความกลาง */
+#headerText {
+  display: inline-block;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* ผู้ใช้ล็อกอินมุมขวา */
+#userDisplay {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Mitr', sans-serif;
+}
+
+/* NAVIGATION */
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: 'Prompt', sans-serif;
+}
+nav a {
+  color: var(--blue);
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  position: relative;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+nav a:hover {
+  color: var(--orange);
+  transform: translateY(-2px);
+}
+nav a.active {
+  color: var(--orange);
+  border-bottom: 3px solid var(--orange);
+}
+
+/* MAIN & SECTION */
+main {
+  flex: 1;
+  padding: 2rem;
+  animation: fadeIn 0.5s;
+}
+section {
+  display: none;
+  animation: fadeIn 0.6s ease;
+}
+section.active {
+  display: block;
+}
+
+/* HEADINGS */
+h2 {
+  color: var(--blue);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  position: relative;
+  font-family: 'Prompt', sans-serif;
+}
+h2::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 4px;
+  background: var(--orange);
+  bottom: -6px;
+  left: 0;
+  border-radius: 2px;
+}
+
+/* TABLES */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: var(--glass);
+  border-radius: 10px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  font-family: 'Sarabun', sans-serif;
+}
+th, td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+th {
+  background: var(--blue);
+  color: white;
+}
+tr:hover {
+  background: rgba(13, 71, 161, 0.08);
+  transition: background 0.3s;
+}
+
+/* FORMS */
+input, select, textarea {
+  padding: 0.6rem;
+  margin: 0.4rem 0;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-family: 'Mitr', sans-serif;
+}
+textarea { resize: vertical; }
+
+button {
+  padding: 0.5rem 1rem;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+  font-family: 'Mitr', sans-serif;
+}
+button:hover {
+  background: var(--orange);
+  transform: scale(1.05);
+}
+
+/* ADD SCORE / LOGIN BOX */
+.add-score, .login-box, .admin-panel {
+  background: var(--glass);
+  max-width: 600px;
+  margin: 1rem auto;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  backdrop-filter: blur(8px);
+  font-family: 'Mitr', sans-serif;
+}
+
+.hidden { display: none; }
+
+/* FOOTER */
+footer {
+  background: linear-gradient(90deg, var(--blue), var(--orange));
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+  font-family: 'Mitr', sans-serif;
+}
+footer span { display: block; font-weight: 600; }
+
+/* ADMIN COLUMN */
+.admin-col { display: table-cell; white-space: nowrap; }
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+.alert { color: red; font-weight: bold; text-align: center; margin-bottom: 1rem; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <img src="https://github.com/Eve-28/HPE-Pccpl/blob/main/images/%E0%B9%82%E0%B8%A5%E0%B9%82%E0%B8%81%E0%B9%89%E0%B8%81%E0%B8%B5%E0%B8%AC%E0%B8%B2%E0%B8%AA%E0%B8%B5%2029.png?raw=true" alt="ตราการแข่งขัน" id="logo">
+  <div id="headerText">
+     ผลการแข่งขันกีฬาสีภายใน | แคแสดสองแควเกมส์ครั้งที่ 29<br>
+    โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย พิษณุโลก
+  </div>
+  <div id="userDisplay"></div>
+</header>
+
+<nav>
+  <a href="#" class="tab-link" data-tab="results">ผลการแข่งขัน</a>
+  <a href="#" class="tab-link" data-tab="schedule">ตารางการแข่งขัน</a>
+  <a href="#" class="tab-link" data-tab="summary">ผลรวมเหรียญ</a>
+  <a href="#" id="loginBtn" class="tab-link" data-tab="login">Login</a>
+</nav>
+
+<main>
+  <section id="results">
+    <h2>ผลการแข่งขัน</h2>
+    <div id="resultsAlert" class="alert hidden"></div>
+    <select id="dayResultsSelect" onchange="renderResults()">
+      <option value="27">27 ต.ค. 2568</option>
+      <option value="28">28 ต.ค. 2568</option>
+      <option value="29">29 ต.ค. 2568</option>
+      <option value="30">30 ต.ค. 2568</option>
+      <option value="31">31 ต.ค. 2568</option>
+    </select>
+
+    <div id="resultsAdminControls" class="hidden" style="text-align:center; margin-bottom:1rem;">
+      <button id="toggleAddResultsBtn">ปิดระบบเพิ่มผลการแข่งขัน</button>
+    </div>
+
+    <table id="resultsTable">
+      <tr>
+        <th>ชนิดกีฬา</th>
+        <th>ทีม A</th>
+        <th>ทีม B</th>
+        <th>คะแนน</th>
+        <th>ผลการแข่งขัน</th>
+        <th>เหรียญ</th>
+        <th class="admin-col">แก้ไข/ลบ</th>
+        <th class="admin-col">บันทึกโดย/เวลา</th>
+      </tr>
+    </table>
+
+    <div class="add-score hidden" id="addResultsForm">
+  <h3>เพิ่มผลการแข่งขัน</h3>
+  <select id="sportResultsSelect">
+    <option>ฟุตซอล</option>
+    <option>บาสเกตบอล ชาย</option>
+    <option>บาสเกตบอล หญิง</option>
+    <option>วอลเลย์บอล ชาย</option>
+    <option>วอลเลย์บอล หญิง</option>
+    <option>แชร์บอล ม.ต้น</option>
+    <option>แชร์บอล ม.ปลาย</option>
+    <option>แบดมินตัน ม.ต้น ชาย เดี่ยว</option>
+    <option>แบดมินตัน ม.ปลาย ชาย เดี่ยว</option>
+    <option>แบดมินตัน ม.ต้น หญิง เดี่ยว</option>
+    <option>แบดมินตัน ม.ปลาย หญิง เดี่ยว</option>
+    <option>แบดมินตัน คู่ผสม</option>
+    <option>เทเบิลเทนนิส ม.ต้น ชาย เดี่ยว</option>
+    <option>เทเบิลเทนนิส ม.ปลาย ชาย เดี่ยว</option>
+    <option>เทเบิลเทนนิส ม.ต้น หญิง เดี่ยว</option>
+    <option>เทเบิลเทนนิส ม.ปลาย หญิง เดี่ยว</option>
+    <option>เทเบิลเทนนิส ม.ต้น คู่ผสม</option>
+    <option>เทเบิลเทนนิส ม.ปลาย คู่ผสม</option>
+    <option>เปตอง ม.ต้น ทีมชาย</option>
+    <option>เปตอง ม.ต้น ทีมหญิง</option>
+    <option>เปตอง ม.ปลาย ทีมชาย</option>
+    <option>เปตอง ม.ปลาย ทีมหญิง</option>
+  </select>
+  <input type="text" id="teamA_res" placeholder="ทีม A">
+  <input type="text" id="teamB_res" placeholder="ทีม B">
+  <textarea id="scoreInput" placeholder="กรอกคะแนนแต่ละเซต เช่น 25-18,21-19,15-13"></textarea>
+  <select id="medalSelect">
+    <option value="-">-</option>
+    <option value="ทอง">ทอง</option>
+    <option value="เงิน">เงิน</option>
+    <option value="ทองแดง">ทองแดง</option>
+  </select>
+  <button onclick="addOrUpdateResult()">บันทึกผล</button>
+</div>
+
+  </section>
+
+  <section id="schedule">
+    <h2>ตารางการแข่งขัน</h2>
+    <select id="daySelect" onchange="renderSchedule()">
+      <option value="27">27 ต.ค. 2568</option>
+      <option value="28">28 ต.ค. 2568</option>
+      <option value="29">29 ต.ค. 2568</option>
+      <option value="30">30 ต.ค. 2568</option>
+      <option value="31">31 ต.ค. 2568</option>
+    </select>
+    <table id="scheduleTable">
+      <tr><th>เวลา</th><th>ชนิดกีฬา</th><th>ทีม A</th><th>ทีม B</th><th>สถานที่</th></tr>
+    </table>
+    <div class="add-score hidden" id="addScheduleForm">
+  <h3>เพิ่มตารางการแข่งขัน</h3>
+  <input type="time" id="timeInput">
+  <select id="sportScheduleSelect">
+    <option>ฟุตซอล</option>
+    <option>บาสเกตบอล ชาย</option>
+    <option>บาสเกตบอล หญิง</option>
+    <option>วอลเลย์บอล ชาย</option>
+    <option>วอลเลย์บอล หญิง</option>
+    <option>แชร์บอล ม.ต้น</option>
+    <option>แชร์บอล ม.ปลาย</option>
+    <option>แบดมินตัน ม.ต้น ชาย เดี่ยว</option>
+    <option>แบดมินตัน ม.ปลาย ชาย เดี่ยว</option>
+    <option>แบดมินตัน ม.ต้น หญิง เดี่ยว</option>
+    <option>แบดมินตัน ม.ปลาย หญิง เดี่ยว</option>
+    <option>แบดมินตัน คู่ผสม</option>
+    <option>เทเบิลเทนนิส ม.ต้น ชาย เดี่ยว</option>
+    <option>เทเบิลเทนนิส ม.ปลาย ชาย เดี่ยว</option>
+    <option>เทเบิลเทนนิส ม.ต้น หญิง เดี่ยว</option>
+    <option>เทเบิลเทนนิส ม.ปลาย หญิง เดี่ยว</option>
+    <option>เทเบิลเทนนิส ม.ต้น คู่ผสม</option>
+    <option>เทเบิลเทนนิส ม.ปลาย คู่ผสม</option>
+    <option>เปตอง ม.ต้น ทีมชาย</option>
+    <option>เปตอง ม.ต้น ทีมหญิง</option>
+    <option>เปตอง ม.ปลาย ทีมชาย</option>
+    <option>เปตอง ม.ปลาย ทีมหญิง</option>
+  </select>
+  <input type="text" id="teamA_sch" placeholder="ทีม A">
+  <input type="text" id="teamB_sch" placeholder="ทีม B">
+  <input type="text" id="locationInput" placeholder="สถานที่">
+  <button onclick="addSchedule()">บันทึกตาราง</button>
+</div>
+
+  </section>
+
+  <section id="summary">
+    <h2>ผลรวมคะแนน</h2>
+    <table id="summaryTable">
+      <tr>
+        <th rowspan="2">สี</th>
+        <th colspan="3">เหรียญ</th>
+        <th rowspan="2">รวม</th>
+      </tr>
+      <tr>
+        <th>ทอง</th>
+        <th>เงิน</th>
+        <th>ทองแดง</th>
+      </tr>
+    </table>
+  </section>
+
+  <section id="login">
+    <div class="login-box">
+      <h3>เข้าสู่ระบบ</h3>
+      <input type="text" id="username" placeholder="ชื่อผู้ใช้">
+      <input type="password" id="password" placeholder="รหัสผ่าน">
+      <button onclick="login()">เข้าสู่ระบบ</button>
+      <div id="loginError" class="alert hidden"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย พิษณุโลก<br>
+  กองกลางกีฬาสีภายใน แคแสดสองแควเกมส์ ครั้งที่ 29 ประจำปีการศึกษา 2568
+  <span>🎬 จัดทำโดย กองกลางโสตทัศนูปกรณ์</span>
+</footer>
+
+
+<script>
+// Users
+const users={
+  "Eve":"1415",
+  "กร":"0001","โดม":"0002","ป่าน":"0003","กัน":"0004","อะตอม":"0005",
+  "กล้อง":"0006","ทิว":"0007","จ๊ะ":"0008","ซี":"0009","ใบบัว":"0010",
+  "อิ่มเอม":"0011","ดรีม":"0012","กีต้าร์":"0013","พีชชี":"0014","แบม":"0015",
+  "ครีม":"0016","โฟโต้":"0017","โดนัท":"0018","เนิร์ส":"0019","ปุณณ์":"0020",
+  "กรณ์":"0021","กันต์":"0022","มิวนิค":"0023","ต้นหนาว":"0024","เคลียร์":"0025",
+  "แดน":"0026","ต้า":"0027","อจ":"0028"
+};
+
+let currentUser=null;
+let currentRole=null;
+let scheduleData=JSON.parse(localStorage.getItem("schedule")||"{}");
+let resultsData=JSON.parse(localStorage.getItem("results")||"{}");
+let resultsSystemOpen = JSON.parse(localStorage.getItem("resultsSystemOpen") ?? "true");
+let editIndex = null;
+
+// Tabs
+function showTab(tabId){
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(tabId).classList.add("active");
+  document.querySelectorAll(".tab-link").forEach(a=>a.classList.remove("active"));
+  document.querySelector(`.tab-link[data-tab=${tabId}]`).classList.add("active");
+  if(tabId==="summary") renderSummary();
+  if(tabId==="schedule") renderSchedule();
+  if(tabId==="results") renderResults();
+}
+document.querySelectorAll(".tab-link").forEach(a=>{
+  a.addEventListener("click", e=>{ e.preventDefault(); showTab(a.dataset.tab); });
+});
+
+// Login
+function login(){
+  const name=document.getElementById("username").value.trim();
+  const pass=document.getElementById("password").value.trim();
+  const errorDiv=document.getElementById("loginError");
+  const userDisplay=document.getElementById("userDisplay");
+  errorDiv.classList.add("hidden");
+
+  if(users[name] && users[name]===pass){
+    currentUser=name;
+    currentRole = (name==="Eve")?"admin":"editor";
+    document.getElementById("loginBtn").textContent="ออกจากระบบ";
+    document.getElementById("login").classList.remove("active");
+    errorDiv.classList.add("hidden");
+
+    userDisplay.textContent = `👤 เข้าสู่ระบบโดย: ${name}${currentRole==="admin"?" ":""}`;
+
+    document.getElementById("addScheduleForm").classList.toggle("hidden", currentRole!=="admin");
+    setupResultsAdmin();
+
+    renderSchedule();
+    renderSummary();
+    renderResults();
+    showTab("results");
+
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+  } else {
+    errorDiv.textContent="❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+    errorDiv.classList.remove("hidden");
+  }
+}
+
+// Logout
+document.getElementById("loginBtn").addEventListener("click", ()=>{
+  if(currentUser){
+    currentUser = null;
+    currentRole = null;
+    document.getElementById("userDisplay").textContent = "";
+    document.getElementById("loginBtn").textContent = "Login";
+    document.getElementById("addScheduleForm").classList.add("hidden");
+    document.getElementById("resultsAdminControls").classList.add("hidden");
+    document.getElementById("addResultsForm").classList.add("hidden");
+    document.getElementById("resultsAlert").classList.add("hidden");
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    showTab("results"); 
+  } else {
+    showTab("login");
+  }
+});
+
+// Results admin setup
+function setupResultsAdmin(){
+  const adminDiv = document.getElementById("resultsAdminControls");
+  if(currentRole === "admin"){
+    adminDiv.classList.remove("hidden");
+    const toggleBtn = document.getElementById("toggleAddResultsBtn");
+    updateResultsFormVisibility();
+    toggleBtn.addEventListener("click", ()=>{
+      resultsSystemOpen = !resultsSystemOpen;
+      localStorage.setItem("resultsSystemOpen", JSON.stringify(resultsSystemOpen));
+      updateResultsFormVisibility();
+    });
+  } else {
+    adminDiv.classList.add("hidden");
+    updateResultsFormVisibility();
+  }
+}
+
+function updateResultsFormVisibility(){
+  const form = document.getElementById("addResultsForm");
+  const alertDiv = document.getElementById("resultsAlert");
+  const toggleBtn = document.getElementById("toggleAddResultsBtn");
+
+  if(!currentUser){
+    form.classList.add("hidden");
+    alertDiv.classList.add("hidden");
+  } else if(currentRole === "admin"){
+    form.classList.remove("hidden");
+    alertDiv.classList.add("hidden");
+    toggleBtn.textContent = resultsSystemOpen ? "ปิดระบบเพิ่มผลการแข่งขัน" : "เปิดระบบเพิ่มผลการแข่งขัน";
+  } else {
+    if(resultsSystemOpen){
+      form.classList.remove("hidden");
+      alertDiv.classList.add("hidden");
+    } else {
+      form.classList.add("hidden");
+      alertDiv.innerHTML = `
+        ระบบเพิ่มผลการแข่งขันปิด<br>
+        เปิดให้รายงานผลการแข่งขันกีฬาสีภายใน แคแสดสองแควเกมส์ครั้งที่ 29<br>
+        27 ตุลาคม 68 ตั้งแต่เวลา 15.00-18.00 น.<br>
+        28 ตุลาคม 68 ตั้งแต่เวลา 15.00-18.00 น.<br>
+        29 ตุลาคม 68 ตั้งแต่เวลา 15.00-18.00 น.<br>
+        30 ตุลาคม 68 ตั้งแต่เวลา 09.30-16.30 น.<br>
+        รายงานผลหลังเวลาที่แจ้งหรือแก้ไขผล ติดต่อโสตทัศนูปกรณ์ ห้องกองกลาง
+      `;
+      alertDiv.classList.remove("hidden");
+    }
+  }
+}
+
+
+// ---- Results ----
+function renderResults(){
+  const day = document.getElementById("dayResultsSelect").value;
+  const table = document.getElementById("resultsTable");
+
+  let headerHTML = `<tr>
+    <th>ชนิดกีฬา</th>
+    <th>ทีม A</th>
+    <th>ทีม B</th>
+    <th>คะแนน</th>
+    <th>ผลการแข่งขัน</th>
+    <th>เหรียญ</th>`;
+  if(currentUser === "Eve"){
+    headerHTML += `<th class="admin-col">แก้ไข/ลบ</th>
+                   <th class="admin-col">บันทึกโดย/เวลา</th>`;
+  }
+  headerHTML += `</tr>`;
+  table.innerHTML = headerHTML;
+
+  if(!resultsData[day]) resultsData[day]=[];
+
+  resultsData[day].forEach((r, idx)=>{
+    const tr = document.createElement("tr");
+
+    const sets = r.score.split(",").map(s=>s.trim());
+    let aWin=0, bWin=0;
+
+    const tableSets = document.createElement("table");
+    tableSets.style.width = "100%";
+    tableSets.style.borderCollapse = "collapse";
+
+    sets.forEach(s=>{
+      const [a,b] = s.split("-").map(Number);
+      if(a>b) aWin++; else if(b>a) bWin++;
+
+      const trSet = document.createElement("tr");
+      trSet.innerHTML = `<td style="border-bottom:1px solid #ccc; padding:2px;">${a}</td>
+                         <td style="border-bottom:1px solid #ccc; padding:2px;">${b}</td>`;
+      tableSets.appendChild(trSet);
+    });
+
+    const scoreSummary = `${aWin}-${bWin}`;
+    let matchResult = "เสมอ";
+    if(aWin>bWin) matchResult = `${r.teamA} ชนะ`;
+    else if(bWin>aWin) matchResult = `${r.teamB} ชนะ`;
+
+    let rowHTML = `
+      <td>${r.sport}</td>
+      <td style="color:${getColor(r.teamA)}">${r.teamA}</td>
+      <td style="color:${getColor(r.teamB)}">${r.teamB}</td>
+      <td><div style="font-weight:bold; margin-bottom:2px;">${scoreSummary}</div></td>
+      <td style="color:${getColor(r.result)}">${matchResult}</td>
+      <td>${r.medal}</td>`;
+
+    if(currentUser === "Eve"){
+      rowHTML += `<td class="admin-col">
+                    <button onclick="editResult('${day}',${idx})">แก้ไข</button>
+                    <button onclick="deleteResult('${day}',${idx})">ลบ</button>
+                  </td>
+                  <td class="admin-col">${r.user||"-"} / ${r.time||"-"}</td>`;
+    }
+
+    tr.innerHTML = rowHTML;
+    const scoreCell = tr.children[3];
+    scoreCell.appendChild(tableSets);
+
+    table.appendChild(tr);
+  });
+}
+
+function addOrUpdateResult(){
+  const day = document.getElementById("dayResultsSelect").value;
+  if(!resultsData[day]) resultsData[day]=[];
+
+  const sport = document.getElementById("sportResultsSelect").value;
+  const teamA = document.getElementById("teamA_res").value.trim();
+  const teamB = document.getElementById("teamB_res").value.trim();
+  const score = document.getElementById("scoreInput").value.trim();
+  const medal = document.getElementById("medalSelect").value;
+
+  const sets = score.split(",").map(s=>s.trim());
+  let aWin=0, bWin=0;
+  sets.forEach(s=>{
+    const [a,b] = s.split("-").map(Number);
+    if(a>b) aWin++; else if(b>a) bWin++;
+  });
+
+  let result = "เสมอ";
+  if(aWin>bWin) result = teamA;
+  else if(bWin>aWin) result = teamB;
+
+  const time = new Date().toLocaleString();
+  const obj = {sport, teamA, teamB, score, medal, result, user:currentUser, time};
+
+  if(editIndex!==null){
+    resultsData[day][editIndex] = obj;
+    editIndex = null; // ✅ รีเซ็ต editIndex หลังแก้ไข
+  } else {
+    resultsData[day].push(obj);
+  }
+
+  localStorage.setItem("results", JSON.stringify(resultsData));
+
+  // ✅ เคลียร์ฟอร์มทุกช่องหลังบันทึก
+  document.getElementById("teamA_res").value = "";
+  document.getElementById("teamB_res").value = "";
+  document.getElementById("scoreInput").value = "";
+  document.getElementById("medalSelect").value = "-";
+  document.getElementById("sportResultsSelect").selectedIndex = 0;
+
+  renderResults();
+  renderSummary();
+}
+
+// Schedule
+function renderSchedule(){
+  const day = document.getElementById("daySelect").value;
+  const table = document.getElementById("scheduleTable");
+  table.innerHTML = `<tr><th>เวลา</th><th>ชนิดกีฬา</th><th>ทีม A</th><th>ทีม B</th><th>สถานที่</th></tr>`;
+  if(!scheduleData[day]) scheduleData[day]=[];
+  scheduleData[day].forEach(s=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${s.time}</td><td>${s.sport}</td>
+                    <td style="color:${getColor(s.teamA)}">${s.teamA}</td>
+                    <td style="color:${getColor(s.teamB)}">${s.teamB}</td>
+                    <td>${s.location}</td>`;
+    table.appendChild(tr);
+  });
+}
+
+function addSchedule(){
+  const day = document.getElementById("daySelect").value;
+  if(!scheduleData[day]) scheduleData[day]=[];
+  const obj = {
+    time: document.getElementById("timeInput").value,
+    sport: document.getElementById("sportScheduleSelect").value,
+    teamA: document.getElementById("teamA_sch").value.trim(),
+    teamB: document.getElementById("teamB_sch").value.trim(),
+    location: document.getElementById("locationInput").value.trim()
+  };
+  scheduleData[day].push(obj);
+  localStorage.setItem("schedule", JSON.stringify(scheduleData));
+  renderSchedule();
+}
+
+// Colors by team
+function getColor(team){
+  const colors = {"แดง":"#E53935","ม่วง":"#8E24AA","เขียว":"#43A047","ฟ้า":"#1E88E5"};
+  return colors[team] || "#000";
+}
+
+// Summary
+function renderSummary(){
+  const table = document.getElementById("summaryTable");
+  const allColors = ["แดง","ม่วง","เขียว","ฟ้า"];
+  let colorMap={};
+
+  allColors.forEach(c=>{
+    colorMap[c] = {ทอง:0,เงิน:0,ทองแดง:0};
+  });
+
+  Object.keys(resultsData).forEach(day=>{
+    resultsData[day].forEach(r=>{
+      if(r.medal && r.medal!=="-"){
+        if(r.result===r.teamA) colorMap[r.teamA][r.medal]++;
+        else if(r.result===r.teamB) colorMap[r.teamB][r.medal]++;
+      }
+    });
+  });
+
+  table.innerHTML = `<tr><th rowspan="2">สี</th><th colspan="3">เหรียญ</th><th rowspan="2">รวม</th></tr>
+                     <tr><th>ทอง</th><th>เงิน</th><th>ทองแดง</th></tr>`;
+
+  allColors.forEach(c=>{
+    const total = colorMap[c].ทอง + colorMap[c].เงิน + colorMap[c].ทองแดง;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td style="color:${getColor(c)}">${c}</td>
+                    <td>${colorMap[c].ทอง||'-'}</td>
+                    <td>${colorMap[c].เงิน||'-'}</td>
+                    <td>${colorMap[c].ทองแดง||'-'}</td>
+                    <td>${total||'-'}</td>`;
+    table.appendChild(tr);
+  });
+}
+
+// Edit/Delete
+function editResult(day,idx){
+  const r = resultsData[day][idx];
+  document.getElementById("sportResultsSelect").value = r.sport;
+  document.getElementById("teamA_res").value = r.teamA;
+  document.getElementById("teamB_res").value = r.teamB;
+  document.getElementById("scoreInput").value = r.score;
+  document.getElementById("medalSelect").value = r.medal;
+  editIndex = idx;
+}
+
+function deleteResult(day, idx){
+  resultsData[day].splice(idx,1);
+  localStorage.setItem("results", JSON.stringify(resultsData));
+  renderResults();
+  renderSummary();
+}
+
+// Initial
+showTab("results");
+</script>
+
+</body>
+</html>
+
+
